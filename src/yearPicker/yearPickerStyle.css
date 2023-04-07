@@ -97,3 +97,12 @@ border-radius: 4px;
   pointer-events: none;
   opacity: 0.3;
 }
+
+#picker-container {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+#picker-container.isOpen {
+  opacity: 1;
+}

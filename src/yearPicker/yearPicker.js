@@ -1,6 +1,8 @@
 import React from 'react';
 import './yearPickerStyle.css'
 import CalendarIcon from './assets/calendar-icon.svg';
+import LeftArrow from './assets/left-arrow.svg';
+import RightArrow from './assets/right-arrow.svg';
 import ActiveCalendarIcon from './assets/calendar-icon-active.svg';
 
 const getYearsArrayFromRange = (startYear, endYear) => {
@@ -16,12 +18,15 @@ class YearPicker extends React.Component {
         super(props);
 
         let { minRange, maxRange, yearArray = [] } = this.props;
-        if(!yearArray.length) {
+        if (!yearArray.length) {
             yearArray = getYearsArrayFromRange(1800, new Date().getFullYear);
         }
         if (minRange && maxRange) {
             yearArray = getYearsArrayFromRange(minRange, maxRange);
+
         }
+
+        console.log('yearArray', yearArray)
         this.state = {
             showPicker: false,
             selectedValue: this.props.value,
@@ -45,9 +50,10 @@ class YearPicker extends React.Component {
     }
     static getDerivedStateFromProps(nextProps, prevState) {
 
-        let { yearArray=[], minRange, maxRange, value } = nextProps;
+        let { yearArray = [], minRange, maxRange, value } = nextProps;
         const { originalArray, selectedValue } = prevState;
-        if(!yearArray.length) {
+        console.log('originalArrayoriginalArray', originalArray)
+        if (!yearArray.length) {
             yearArray = getYearsArrayFromRange(1800, new Date().getFullYear());
         }
         if (minRange && maxRange) {
@@ -78,12 +84,12 @@ class YearPicker extends React.Component {
         const { onSelect } = this.props;
         return this.state.selectedArray.map((obj, index) => {
             return (
-                <span style={
+                <span key={obj} style={
                     {
                         backgroundColor: selectedValue === obj ? '#db0040' : '',
                         color: selectedValue === obj ? '#fff !importt' : 'rgb(16, 23, 44)'
                     }}>
-                    <span className="StyledYear" onClick={() => onSelect? onSelect(obj) : alert(obj)}>{obj}</span>
+                    <span className="StyledYear" onClick={() => onSelect ? onSelect(obj) : alert(obj)}>{obj}</span>
                     {(index + 1) % 4 === 0 && <br />}
                 </span>
             )
@@ -91,6 +97,7 @@ class YearPicker extends React.Component {
     }
     incrementValue = () => {
         const { selectedIndexArray, originalArray } = this.state
+        console.log('originalArrayoriginalArray', originalArray)
         if (selectedIndexArray + 12 <= originalArray.length - 1) {
             const newArray = this.getYearsArray(originalArray, selectedIndexArray + 12, selectedIndexArray + (12 * 2))
             this.setState({
@@ -112,23 +119,25 @@ class YearPicker extends React.Component {
     render() {
         const { showPicker, selectedArray } = this.state;
         const { leftIcon, rightIcon, icon, activeIcon } = this.props;
+
         return (
             <div>
                 <img style={{ height: '30px', width: '30px' }} onClick={this.handlePicker} src={
                     showPicker ?
                         icon ? icon : CalendarIcon : activeIcon ? activeIcon : ActiveCalendarIcon} />
-                {showPicker &&
-                    <div className="Header">
+                {
+                    // showPicker &&
+                    <div id='picker-container' className={`Header ${showPicker ? 'isOpen' : ''}`}>
                         <div className="StyledHeader">
                             <div className="StyledContainer">
-                                <span className={`clickable ${(this.state.selectedIndexArray - 12 >= 0) ? '': 'disabled'}`} onClick={this.decrementValue}>
-                                    {leftIcon ? <img onClick={this.handlePicker} src={leftIcon} /> : '<'}
+                                <span className={`clickable ${(this.state.selectedIndexArray - 12 >= 0) ? '' : 'disabled'}`} onClick={this.decrementValue}>
+                                    {<img style={{ maxWidth: '15px' }} src={leftIcon || LeftArrow} alt={leftIcon} />}
                                 </span>
                                 <span>
                                     {selectedArray[0]}-{selectedArray[selectedArray.length - 1]}
                                 </span>
-                                <span className={`clickable ${(this.state.selectedIndexArray + 12 <= this.props.yearArray.length - 1) ? '': 'disabled'}`} onClick={this.incrementValue}>
-                                    {rightIcon ? <img onClick={this.handlePicker} src={rightIcon} /> : '>'}
+                                <span className={`clickable ${(this.state.selectedIndexArray + 12 <= (this.state.originalArray.length > 0 ? this.state.originalArray.length - 1 : this.props.yearArray.length - 1)) ? '' : 'disabled'}`} onClick={this.incrementValue}>
+                                    {<img style={{ maxWidth: '15px' }} src={rightIcon || RightArrow} alt={rightIcon} />}
                                 </span>
                             </div>
                             <div className="StyledCalendarBody">
