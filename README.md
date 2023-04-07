@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### `Working demo`
 
 <br>
-[https://react-picker.web.app](https://react-picker.web.app).
+[https://react-picker.web.app](https://react-picker.web.app)
 
 ## Available Scripts
 
