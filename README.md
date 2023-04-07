@@ -5,6 +5,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 <br>
 https://react-picker.web.app
 
+### `Usage`
+
+```
+    <YearPicker
+        yearArray={yearArr}
+        value={yearSelected}
+        onSelect={(e) => setYear(e)}
+        // activeIcon={img src}
+        // icon={img src}
+        // leftIcon={img src}
+        // rightIcon={img src}
+        minRange={1900}
+        maxRange={2018}
+      />
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
