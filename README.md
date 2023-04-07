@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### `Working demo`
 
 <br>
-Open [https://react-picker.web.app/](https://react-picker.web.app/) view it in the browser.
+[https://react-picker.web.app](https://react-picker.web.app).
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
